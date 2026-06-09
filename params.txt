@@ -1,0 +1,309 @@
+Numerical Experiment Setup for
+Differentiated Pricing
+1
+Numerical Experiment Setup
+The parameters listed in the numerical setup are sufficient to reproduce the paper-style
+experiment, as long as the transmission rates and the balanced offloading amount mk are
+explicitly computed.
+The available system and user parameters are:
+B, N0, hk, Fk, Ck, Rk, pk, PB,k, ¯F, αk, fC.
+From these parameters, the following quantities can be computed:
+1. uplink transmission rate ru
+k,
+2. downlink transmission rate rd
+k,
+3. balanced offloading amount mk,
+4. knapsack weight wk = mkCk,
+5. knapsack value vk = mkCk
+Fk ,
+6. optimal selected users x∗
+k,
+7. optimal differentiated price µ∗
+k =
+1
+Fk .
+1.1
+Additional Required Setting
+The only additional setting that must be specified is the number of users:
+K.
+For a small global-solver test, one can use
+K = 5
+or
+1
+K = 10.
+To follow the paper’s larger simulation scenario, one can use
+K = 30.
+The bandwidth is assumed to be equally allocated among the users. Therefore, the
+bandwidth per user is
+Bk = B
+K .
+This assumption is consistent with the idea that when the number of users increases,
+each user receives a smaller portion of the available spectrum.
+1.2
+Unit Conversion
+The total bandwidth is
+B = 1 MHz = 106 Hz.
+The local CPU frequency of user k is selected from
+Fk ∈{0.1, 0.2, . . . , 1} GHz.
+Therefore, in SI units,
+Fk = Fk × 109 cycles/s.
+The edge cloud CPU frequency is
+fC = 100 GHz = 100 × 109 cycles/s.
+The input data size is generated as
+Rk ∈[100, 500] KB.
+This is converted to bits as
+Rk = Rk × 1024 × 8.
+The noise power spectral density is
+N0 = −174 dBm/Hz.
+It is converted to W/Hz by
+N0 = 10
+−174−30
+10
+.
+2
+The channel gain hk is generated in dB scale and converted into linear scale by
+hk = 10
+hdB
+k
+10 .
+1.3
+Transmission Rate Calculation
+The uplink transmission rate of user k is computed as
+ru
+k = Bk log2
+
+1 + pkhk
+N0Bk
+
+.
+The downlink transmission rate of user k is computed as
+rd
+k = Bk log2
+
+1 + PB,khk
+N0Bk
+
+.
+Here, pk is the uplink transmit power of user k, while PB,k is the downlink transmit
+power from the base station or edge cloud to user k.
+1.4
+Balanced Offloading Amount
+The local computing latency is
+tloc
+k
+= (Rk −ℓk)Ck
+Fk
+.
+The offloading-side latency is
+toff
+k
+= ℓk
+ru
+k
++ ℓkCk
+fC
++ αkℓk
+rd
+k
+.
+Define
+βk = 1
+ru
+k
++ Ck
+fC
++ αk
+rd
+k
+.
+Then the offloading-side latency can be written as
+toff
+k
+= βkℓk.
+The balanced offloading amount mk is obtained from the condition
+tloc
+k
+= toff
+k
+.
+Therefore,
+(Rk −mk)Ck
+Fk
+= βkmk.
+Solving for mk gives
+3
+mk =
+CkRk
+Ck + Fkβk
+.
+This value represents the amount of data that balances the local-computing time and
+the offloading-side time.
+1.5
+Knapsack Formulation for Differentiated Pricing
+After computing mk, the differentiated pricing problem can be written as a binary knap-
+sack problem.
+The cloud capacity consumed by user k is
+wk = mkCk.
+The revenue value obtained from selecting user k is
+vk = mkCk
+Fk
+.
+The binary decision variable is
+xk ∈{0, 1},
+where
+xk =
+
+
+
+1,
+if user k is selected for offloading,
+0,
+otherwise.
+Therefore, the differentiated pricing optimization problem becomes
+max
+xk∈{0,1}
+K
+X
+k=1
+vkxk
+subject to
+K
+X
+k=1
+wkxk ≤¯F,
+xk ∈{0, 1},
+∀k.
+Substituting wk and vk, the problem can also be written as
+max
+xk∈{0,1}
+K
+X
+k=1
+mkCk
+Fk
+xk
+subject to
+4
+K
+X
+k=1
+mkCkxk ≤¯F.
+1.6
+Price Recovery
+After the optimal binary decision x∗
+k is obtained, the optimal differentiated price is re-
+covered as
+µ∗
+k =
+
+
+
+1
+Fk ,
+x∗
+k = 1,
+sufficiently large price,
+x∗
+k = 0.
+If user k is selected, the cloud charges the maximum price that the user is still willing
+to accept, namely
+µ∗
+k = 1
+Fk
+.
+If user k is not selected, the cloud sets a sufficiently high price so that the user chooses
+not to offload.
+1.7
+Latency Measurement
+After solving the offloading decision, the optimal offloaded data size of user k is
+ℓ∗
+k = mkx∗
+k.
+The local-computation latency becomes
+tloc
+k
+= (Rk −ℓ∗
+k)Ck
+Fk
+.
+The offloading-side latency becomes
+toff
+k
+= ℓ∗
+k
+ru
+k
++ ℓ∗
+kCk
+fC
++ αkℓ∗
+k
+rd
+k
+.
+The total latency of user k is
+tk = max
+
+tloc
+k , toff
+k
+
+.
+The average latency over all users is
+¯t = 1
+K
+K
+X
+k=1
+tk.
+This average latency includes both selected and unselected users. If x∗
+k = 0, then
+ℓ∗
+k = 0,
+5
+so user k computes all of its task locally and its latency becomes
+tk = RkCk
+Fk
+.
+1.8
+Effect of Increasing the Number of Users
+If the total bandwidth B and the cloud computation capacity ¯F remain fixed, increasing
+the number of users generally increases the average latency.
+This is because the bandwidth per user is
+Bk = B
+K .
+As K increases, Bk decreases. This reduces the uplink and downlink transmission
+rates ru
+k and rd
+k. Consequently, the transmission components of the offloading latency
+increase.
+Furthermore, more users compete for the same limited cloud computation capacity ¯F.
+Therefore, not all users can be selected for offloading. Users that are not selected must
+compute locally, and if they have weak local CPU capability, their local latency can be
+high.
+Therefore, with fixed system resources, the expected trend is
+K ↑
+⇒
+Bk ↓
+⇒
+ru
+k, rd
+k ↓
+⇒
+¯t ↑.
+However, because user parameters are randomly generated, the increase in average
+latency may not be strictly monotonic in every single simulation run. For example, if
+newly added users have small task sizes Rk, low computation intensity Ck, or strong
+local CPU frequency Fk, the average latency may not always increase for that particular
+realization.
+1.9
+Summary
+The parameters in the numerical setup are sufficient to reproduce the experiment because
+they allow the generation of each user’s computation capability Fk, task size Rk, task
+intensity Ck, and wireless channel condition hk. These parameters are used to compute
+the uplink and downlink transmission rates, the balanced offloading amount mk, the
+knapsack weight wk = mkCk, and the knapsack value vk = mkCk/Fk.
+The only additional setting required is the number of users K. With the assumption
+of equal bandwidth allocation Bk = B/K, the differentiated-pricing problem can then be
+solved using a global solver such as SCIP, BARON, or Couenne.
+6

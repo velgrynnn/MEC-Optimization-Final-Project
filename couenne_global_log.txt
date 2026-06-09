@@ -1,0 +1,45 @@
+Solver command line: ['C:\\Users\\Fadil\\AppData\\Roaming\\Python\\Python313\\site-packages\\ampl_module_coin\\bin\\couenne.exe', 'C:\\Users\\Fadil\\AppData\\Local\\Temp\\tmprdjjpotu.pyomo.nl', '-AMPL']
+
+Couenne 0.5.8 -- an Open-Source solver for Mixed Integer Nonlinear Optimization
+Mailing list: couenne@list.coin-or.org
+Instructions: http://www.coin-or.org/Couenne
+couenne: 
+ANALYSIS TEST: NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I             1         OPT -54.040519       10 0.007
+NLP0014I             2      INFEAS -58.226045        0 0
+NLP0014I *           1      INFEAS -58.226045        0 0   resolve robustness
+Loaded instance "C:\Users\Fadil\AppData\Local\Temp\tmprdjjpotu.pyomo.nl"
+Constraints:            1
+Variables:              3 (3 integer)
+Auxiliaries:            1 (0 integer)
+
+Coin0506I Presolve 1 (-1) rows, 3 (-1) columns and 3 (-4) elements
+Clp0006I 0  Obj 0 Dual inf 58.226042 (3)
+Clp0006I 1  Obj -54.040518
+Clp0000I Optimal - objective value -54.040518
+Clp0032I Optimal objective -54.04051815 - 1 iterations time 0.002, Presolve 0.00
+Clp0000I Optimal - objective value -54.040518
+NLP Heuristic: NLP0014I             4      INFEAS -58.226045        0 0
+NLP0014I *           1      INFEAS -58.226045        0 0   resolve robustness
+no solution.
+Clp0000I Optimal - objective value -54.040518
+Optimality Based BT: Couenne: new cutoff value -5.2848621781e+01 (0.012 seconds)
+0 improved bounds
+Probing: 0 improved bounds
+NLP Heuristic: time limit reached.
+Cbc0013I At root node, 0 cuts changed objective from -54.040518 to -52.848622 in 2 passes
+Cbc0014I Cut generator 0 (Couenne convexifier cuts) - 0 row cuts average 0.0 elements, 1 column cuts (1 active)
+Cbc0004I Integer solution of -52.848622 found after 1 iterations and 0 nodes (0.00 seconds)
+Cbc0001I Search completed - best objective -52.84862178144189, took 1 iterations and 0 nodes (0.00 seconds)
+Cbc0035I Maximum depth 0, 0 variables fixed on reduced cost
+
+ 	"Finished"
+
+Linearization cuts added at root node:          2
+Linearization cuts added in total:              2  (separation time: 0s)
+Total solve time:                           0.003s (0.003s in branch-and-bound)
+Lower bound:                             -52.8486
+Upper bound:                             -52.8486  (gap: 0.00%)
+Branch-and-bound nodes:                         0
+

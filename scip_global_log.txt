@@ -1,0 +1,32 @@
+feasible solution found by trivial heuristic after 0.0 seconds, objective value 0.000000e+00
+presolving:
+(round 1, fast)       1 del vars, 1 del conss, 0 add conss, 0 chg bounds, 3 chg sides, 2 chg coeffs, 0 upgd conss, 0 impls, 0 clqs, 0 implints
+presolving (2 rounds: 2 fast, 1 medium, 1 exhaustive):
+ 3 deleted vars, 1 deleted constraints, 0 added constraints, 0 tightened bounds, 0 added holes, 3 changed sides, 2 changed coefficients
+ 0 implications, 0 cliques, 0 implied integral variables (0 bin, 0 int, 0 cont)
+transformed 1/2 original solutions to the transformed problem space
+presolving solved problem
+Presolving Time: 0.00
+
+SCIP Status        : problem is solved [optimal solution found]
+Solving Time (sec) : 0.00
+Solving Nodes      : 0
+Primal Bound       : +5.28486217814419e+01 (2 solutions)
+Dual Bound         : +5.28486217814419e+01
+Gap                : 0.00 %
+feasible solution found by trivial heuristic after 0.0 seconds, objective value 0.000000e+00
+presolving:
+(round 1, fast)       1 del vars, 1 del conss, 0 add conss, 0 chg bounds, 3 chg sides, 2 chg coeffs, 0 upgd conss, 0 impls, 0 clqs, 0 implints
+presolving (2 rounds: 2 fast, 1 medium, 1 exhaustive):
+ 3 deleted vars, 1 deleted constraints, 0 added constraints, 0 tightened bounds, 0 added holes, 3 changed sides, 2 changed coefficients
+ 0 implications, 0 cliques, 0 implied integral variables (0 bin, 0 int, 0 cont)
+transformed 1/2 original solutions to the transformed problem space
+presolving solved problem
+Presolving Time: 0.00
+
+SCIP Status        : problem is solved [optimal solution found]
+Solving Time (sec) : 0.00
+Solving Nodes      : 0
+Primal Bound       : +5.28486217814419e+01 (2 solutions)
+Dual Bound         : +5.28486217814419e+01
+Gap                : 0.00 %

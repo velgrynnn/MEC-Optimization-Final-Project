@@ -1,0 +1,591 @@
+arXiv:1712.00599v1  [cs.IT]  2 Dec 2017
+1
+Price-Based Distributed Ofﬂoading for Mobile-Edge
+Computing with Computation Capacity Constraints
+Mengyu Liu and Yuan Liu, Member, IEEE
+Abstract—Mobile-edge computing (MEC) is a promising tech-
+nology to enable real-time information transmission and com-
+puting by ofﬂoading computation tasks from wireless devices to
+network edge. In this study, we propose a price-based distributed
+method to manage the ofﬂoaded computation tasks from users.
+A Stackelberg game is formulated to model the interaction
+between the edge cloud and users, where the edge cloud sets
+prices to maximize its revenue subject to its ﬁnite computation
+capacity, and for given prices, each user locally makes ofﬂoading
+decision to minimize its own cost which is deﬁned as latency
+plus payment. Depending on the edge cloud’s knowledge of the
+network information, we develop the uniform and differentiated
+pricing algorithms, which can both be implemented in distributed
+manners. Simulation results validate the effectiveness of the
+proposed schemes.
+Index Terms—Mobile-edge computing (MEC), computa-
+tion ofﬂoading, pricing, Stackelberg game.
+I. INTRODUCTION
+With the increasing popularity of new mobile applications
+of Internet of Things (IoT), future wireless networks with
+billions of IoT devices are required to support ultra low-latency
+communication and computing. However, the IoT devices are
+usually with small physical sizes and limited batteries, thus
+always suffer from intensive computation and high resource-
+consumption for real-time information processing [1]–[3].
+Mobile-edge computing (MEC) is a promising technology
+to address this problem. Unlike conventional cloud computing
+integrated with remote central clouds results in long latency
+and fragile wireless connections, MEC migrates intensive
+computation tasks from IoT devices to the physically proximal
+network edge, and provides low-latency as well as ﬂexible
+computing and communication services for IoT devices. As
+a result, MEC is commonly agreed as a key technology to
+realize next-generation wireless networks [4].
+Joint radio and computation resource allocation for MEC
+has been recently investigated in the literature, e.g., [5]–
+[12]. In general, the MEC paradigm can be divided into two
+categories: binary ofﬂoading [5]–[9] and partial ofﬂoading
+[10]–[12]. With binary ofﬂoading, the computation tasks at
+users can not be partitioned but must be executed as a whole
+Manuscript received October 26, 2017; revised November 28, 2017; ac-
+cepted December 1, 2017. This paper was supported in part by the Natural
+Science Foundation of China under Grant 61401159 and Grant 61771203,
+and in part by the Pearl River Science and Technology Nova Program of
+Guangzhou under Grant 201710010111. The associate editor coordinating
+the review of this manuscript and approving it for publication was M. Naﬁe.
+(Corresponding author: Y. Liu)
+The authors are with the School of Electronic and Information Engineering,
+South China University of Technology, Guangzhou 510641, China (e-mail:
+liu.mengyu@mail.scut.edu.cn, eeyliu@scut.edu.cn).
+either at users or at edge cloud. With partial ofﬂoading, the
+computation tasks at users can be partitioned into different
+parts for local computing and ofﬂoading at the same time.
+Among the mentioned literature, a handful of works [8],
+[9] adopted game theory to design distributed mechanisms for
+efﬁcient resource allocation in MEC systems. For example,
+multiuser binary ofﬂoading was considered in [8] using a Nash
+game to maximize the ofﬂoaded tasks subject to the total time
+and energy constraints. The work [9] considered competition
+among multiple heterogeneous clouds. In view of prior works,
+most of them assumed that the computation capacity of the
+edge cloud is inﬁnite. However, as MEC server is located
+at network edge, its computation capacity should be ﬁnite,
+especially in the networks with intensive workloads. In this
+case, a mechanism is needed to control users’ ofﬂoaded tasks
+to make the network feasible. Moreover, the mechanism should
+provide reasonable incentives for both edge cloud and users to
+efﬁciently allocate network resources in a distributed fashion.
+Motivated by the above issues, we consider an edge cloud
+with ﬁnite computation capacity, which is treated as a divisible
+resource to be sold among the users. The interaction between
+the edge cloud and users is modeled as a Stackelberg game,
+where the edge cloud sets prices to maximize its revenue
+and each user designs the ofﬂoading decision individually to
+minimize its cost that is deﬁned as latency plus payment. The
+main contributions are two-fold: 1) We propose a new game-
+based distributed MEC scheme, where the users compete for
+the edge cloud’s ﬁnite computation resources via a pricing
+approach, which is modeled as a Stackelberg game. 2) The
+optimal uniform and differentiated pricing algorithms are pro-
+posed, which can be implemented with a distributed manner.
+II. SYSTEM MODEL AND PROBLEM FORMULATION
+A. System Model
+We consider a MEC system with K users and one base
+station (BS) that is integrated with a MEC server to execute
+the ofﬂoaded data of the users. All nodes have a single antenna.
+The users’ computation data can be arbitrarily divided in bit-
+wise for partial local computing and partial ofﬂoading. We
+assume that the total bandwidth B is equally divided for
+K users such that each user can occupy a non-overlapping
+frequency to ofﬂoad its data to the edge cloud simultaneously.
+The quasi-static channel model is considered, where channels
+remain unchanged during each ofﬂoading period, but can
+vary in different ofﬂoading periods. We also assume that the
+computation ofﬂoading can be completed in a period.
+Let Ck denote the number of CPU cycles for computing
+1-bit of input data at user k. It is assumed that user k has to
+2
+execute Rk bits of input data in total, where 0 ≤ℓk ≤Rk
+bits are ofﬂoaded to the edge cloud while the rest (Rk −ℓk)
+bits are computed by its local CPU. The local CPU frequency
+of user k is denoted as Fk that is measured by the number of
+CPU cycles per second. Then the time for local computing at
+user k is tloc,k = (Rk −ℓk)Ck/Fk. The ofﬂoading time toﬀ,k
+of user k comprises three parts: the uplink transmission time
+tu,k, the execution time at the cloud tc,k, and the downlink
+feedback time td,k. Thus, the ofﬂoading time toﬀ,k is
+toﬀ,k = tu,k + tc,k + td,k.
+(1)
+Since the local computing and ofﬂoading can be performed
+concurrently, the required time of user k for executing the
+total Rk bits data can be expressed as tk = max{tloc,k, toﬀ,k}.
+More specially, the data size of the computed result fed back
+to user k is αkℓk, where αk (αk > 0) accounts for the ratio of
+output to input bits ofﬂoaded to the cloud [13], which depends
+on the applications of the users. Then we have tu,k = ℓk/rk
+and td,k = αkℓk/rB,k, where rk = B
+K log2
+
+1 +
+pkhk
+B/KN0
+
+and
+rB,k = B
+K log2
+
+1 + PB,khk
+B/KN0
+
+denote the uplink and downlink
+transmission rates for user k, respectively. Here N0 is the noise
+power spectrum density, hk is the channel gain between the
+BS and user k, and PB,k and pk are the downlink and uplink
+power for user k, respectively. Moreover, let fc,k denote the
+computational speed of the edge cloud assigned to user k,
+then we have tc,k = ℓkCk/fc,k. Here we consider equal fc,k
+allocation for simplicity, i.e., fc,k = fC/K, where fC is the
+total computational speed of the could.
+We consider a practical constraint that the edge cloud
+has ﬁnite computation capacity so that its CPU cycles for
+computing the sum received data in each ofﬂoading period
+are upper bounded by F, the constraint can be expressed as
+K
+X
+k=1
+ℓkCk ≤F.
+(2)
+Note that F and fC represent the MEC server’s computational
+quantity and speed for the ofﬂoaded CPU cycles, respectively.
+B. Stackelberg Game Formulation
+In this paper, the users consume the edge cloud’s resources
+to execute the computation tasks while the edge cloud has
+to ensure its available CPU cycles for computing the total
+ofﬂoaded data to be below the computation capacity. Hence, to
+adjust the demand and supply of the computation resources, it
+is considered that the edge cloud prices the CPU cycles ℓkCk
+of the ofﬂoaded data for each user k. Thus the Stackelberg
+game can be applied to model the interaction between the
+edge cloud and users, where the edge cloud is the leader
+and the users are the followers. The edge cloud (leader) ﬁrst
+imposes the prices for CPU cycles of users. Then, the users
+(followers) divide their input data for local computing and
+ofﬂoading individually based on the prices announced from
+the edge cloud.
+Denote the CPU cycle prices for users as a set µ =
+{µ1, · · · , µK}. The objective of the edge cloud is to maxi-
+mize its revenue obtained from selling the ﬁnite computation
+resources to users. Mathematically, the optimization problem
+at the edge cloud’s side can be expressed as (leader problem)
+P1 :
+max
+µ⪰0
+UB(µ) =
+K
+X
+k=1
+µkℓkCk
+s.t.
+(2).
+Note that the ofﬂoaded data ℓk for user k is actually a function
+of µk, since the size of data that each user is willing to ofﬂoad
+is dependent on its assigned price.
+At the users’ side, each user’s cost is deﬁned as its latency
+plus the payment charged by the edge cloud, i.e.,
+Uk(ℓk, µk) = tk + µkℓkCk,
+(3)
+which is equivalent to
+Uk(ℓk, µk) =
+( µk −
+1
+Fk
+
+ℓkCk + RkCk
+Fk ,
+0 ≤ℓk ≤mk,
+βkℓk + µkℓkCk,
+mk < ℓk ≤Rk,
+(4)
+where βk =
+1
+rk + Ck
+fc,k +
+αk
+rB,k and 0 < mk < Rk is deﬁned as
+mk =
+CkRk
+βkFk+Ck .
+The goal of each user k is to minimize its own cost by
+choosing the optimal ofﬂoaded data size ℓk for given price µk
+set by the edge cloud. Mathematically, this problem can be
+expressed as (follower problem)
+P2 :
+min
+ℓk
+Uk(ℓk, µk)
+s.t.
+0 ≤ℓk ≤Rk.
+It is worth noting that the payment term in Problem P1 and
+Problem P2 can be cancelled each other from the net utility
+perspective. Problem P1 and Problem P2 in the Stackelberg
+game are coupled in a complicated way, i.e., the pricing
+strategies of the edge cloud have an inﬂuence on the ofﬂoaded
+data sizes of the users which also impact the edge cloud’s
+revenue in turn.
+III. OPTIMAL ALGORITHM
+To analyze the considered Stackelberg game, each user k
+independently decides its ofﬂoading strategy ℓ∗
+k by solving
+Problem P2 with given price µ. Knowing each user’s of-
+ﬂoading decision ℓ∗
+k(µk), the edge cloud sets its optimal price
+µ∗by solving Problem P1. The above process is known as
+the backward induction. In this paper, two optimal pricing
+strategies are considered, which are termed as uniform pricing
+and differentiated pricing [14]. In the following, we will
+investigate the two pricing schemes respectively.
+A. Uniform Pricing
+For the uniform pricing scheme, the edge cloud sets and
+broadcasts a uniform price to all users, i.e., µ = µ1 · · · =
+µK. For given uniform price µ, the objective function Uk is a
+piecewise function of ℓk, which is linear in each interval from
+(4). Then, by exploiting the structure of Uk, we can obtain the
+optimal solution for Problem P2 in the following proposition.
+Proposition 1. The optimal ofﬂoading decision of each user
+in Problem P2 follows the threshold-based policy, i.e.,
+ℓ∗
+k(µ) = mkxk,
+∀k,
+(5)
+3
+where the binary variable xk is deﬁned as
+xk =
+(
+1,
+µ ≤
+1
+Fk ,
+0,
+otherwise.
+(6)
+Proof. Please refer to Appendix A.
+From Proposition 1, we obtain that the ofﬂoading threshold
+is 1/µ, i.e., user k prefers to ofﬂoad mk bits to the edge
+cloud if its CPU frequency Fk is smaller than or equal to the
+threshold, and leaves all bits for local computing otherwise. In
+other words, the computation ofﬂoading is beneﬁcial if the user
+has small computational speed Fk and it is likely to compute
+locally otherwise.
+Then we turn our attention to Problem P1. By substituting
+(5) into Problem P1, the optimization problem at the edge
+cloud for the uniform pricing scheme can be rewritten as
+P3 :
+max
+µ≥0
+UB(µ) = µ
+K
+X
+k=1
+mkxkCk
+(7)
+s.t.
+K
+X
+k=1
+mkxkCk ≤F.
+(8)
+Proposition 2. Without loss of generality, we sort 1/F1 <
+· · · < 1/FK−1 < 1/FK, the optimal uniform price µ∗must
+belong to the set {1/F1, · · · , 1/FK−1, 1/FK}.
+Proof. Please refer to Appendix B.
+According to Proposition 2, the revenue maximization prob-
+lem in P3 reduces to the one-dimensional search problem over
+K values in {1/Fk}K
+k=1 and we summarize the whole method
+in Algorithm 1 formally. Specially, the edge cloud bargains
+with the users by announcing price in the decreasing order of
+{1/Fk}K
+k=1. Since the required sum CPU cycles PK
+k=1 ℓkCk
+decreases with the price µ, the price bargaining ends as long
+as the computation capacity constraint (8) is active and there
+is no need for bargaining the rest of price candidates.
+It is obvious that the total complexity of Algorithm 1 to
+search µ∗is O(log K). For the uniform pricing scheme, the
+edge cloud needs the limited network information, i.e., Fk and
+Ck, which are collected by the cloud before the algorithm.
+In each iteration, after knowing the price µ broadcasted by
+the edge cloud, each user independently makes its ofﬂoading
+decision ℓk and reports it to the edge cloud for updating the
+price. Therefore, the cloud broadcasts the price µ and each user
+reports its ofﬂoading decision ℓk, which are the information
+exchanged between the edge cloud and the users in each
+iteration. Hence, Algorithm 1 is a fully distributed algorithm.
+B. Differentiated Pricing
+Here, we consider the general case where the edge cloud
+charges the different users with different prices. Similar to the
+uniform pricing case, the optimal solution for Problem P2 is
+also (5), except that µ in xk is replaced by µk. And, Problem
+P1 can be rewritten as
+P4 :
+max
+µ⪰0
+UB(µ) =
+K
+X
+k=1
+µkmkxkCk
+s.t.
+(8).
+Algorithm 1 Optimal Uniform Pricing Policy for Problem P3
+1: The edge cloud initializes τ = K and µτ = 1/Fτ.
+2: repeat
+3:
+Every user decides its optimal ofﬂoaded data size
+ℓ∗
+k(µτ) according to (5).
+4:
+The edge cloud computes its revenue UB(µτ) from (7).
+5:
+if PK
+k=1 ℓ∗
+k(µτ)Ck ≤F then
+6:
+Update the price µτ−1 = 1/Fτ−1, and τ ←τ −1;
+7:
+else
+8:
+Set UB(µτ) = 0; beak;
+9:
+end if
+10: until τ ≤0.
+11: Output µ∗←argmaxµτ UB(µτ).
+It is worth noting that the price µk is actually a function of
+xk for user k. Speciﬁcally, xk = 1, i.e., µk ≤1/Fk and the
+optimal price for user k is thus given by µ∗
+k = 1/Fk as the
+objective function of Problem P4 is an increasing function of
+µk. When xk = 0, the edge cloud sets the price for user k as
+µ∗
+k = ∞and earns no revenue. Based on the above analysis,
+Problem P4 is thus equivalent to
+P4′ :
+max
+xk∈{0,1}
+UB(xk) =
+K
+X
+k=1
+mkxkCk
+Fk
+s.t.
+(8).
+Problem P4′ is actually a binary knapsack problem with the
+weight mkCk and the value mkCk/Fk for user k. Since the
+problem is NP-complete, there is no efﬁcient algorithm solving
+it optimally. However, we can apply dynamic programming
+[15] to solve the above binary knapsack problem in pseudo-
+polynomial time.1
+Each user k needs to report mk, Ck, and Fk to the edge
+cloud for solving Problem P4′ and there is no need for
+iteration between the edge cloud and users. Obtaining the
+optimal price µ∗
+k, user k decides its optimal strategy based
+on (5). Therefore, the differentiated pricing scheme is also a
+distributed algorithm, but it needs more information and higher
+complexity than that of the uniform pricing scheme.
+IV. NUMERICAL RESULTS
+In the simulation setup, we assume that the total chan-
+nel bandwidth B is 1 MHz and the noise power spectrum
+density N0 is −174 dBm/Hz. Each hk is assumed to be
+uniformly distributed in [−50, −30] dBm. The local CPU
+frequency Fk for each user k is uniformly selected from the set
+{0.1, 0.2, · · · , 1} GHz, and the required number of CPU cycles
+per bit and the data size for user k are uniformly distributed
+with Ck ∈[500, 1500] cycles/bit and Rk ∈[100, 500] KB,
+respectively. Unless otherwise noted, the remaining parameters
+are set as follows: pk = 0.1 W, PB,k = 1 W, F = 6 × 109
+cycles/slot, αk = 0.2, and fC = 100 GHz.
+The average performance of the two proposed pricing
+schemes is evaluated and compared in terms of average latency
+and revenue. Besides, we consider the scheme where all input
+1 We adopt kp01(·) software package in MATLAB.
+4
+1
+2
+3
+4
+5
+6
+0.2
+0.4
+0.6
+0.8
+1
+Edge cloud computation capacity (109 cycles/slot)
+Average latency (s)
+1
+2
+3
+4
+5
+6
+0
+10
+20
+30
+Edge cloud computation capacity (109 cycles/slot)
+Revenue
+Differentiated pricing
+Uniform pricing
+Only local computing
+(a) K = 30
+10
+15
+20
+25
+30
+35
+40
+45
+50
+0
+0.5
+1
+Number of users
+Average latency (s)
+10
+15
+20
+25
+30
+35
+40
+45
+50
+0
+10
+20
+30
+40
+Number of users
+Revenue
+Uniform pricing
+Differentiated pricing
+Only local computing
+(b) F = 6 × 109 cycles/slot
+Fig. 1: Performance comparison.
+data is computed locally at users for comparison. In Fig. 1(a),
+both latency and revenue performance become better as the
+computation capacity increases, while the scheme of only local
+computing has the worst latency performance and is not related
+with the computation capacity. In addition, the differentiated
+pricing scheme has better performance in both latency and
+revenue, which shows that it is more accurate to allocate
+resource. Thus there exists a tradeoff between performance
+and complexity for the two pricing schemes.
+Fig. 1(b) illustrates the effect of the number of users on
+the average latency and revenue, and we have the similar
+observations as Fig. 1(a) for the three schemes. Besides, with
+the increasing number of users, the allocated spectrum for each
+user decreases, resulting in lower transmission rate and thus
+higher latency. Moreover, it is expected that competition with
+more users forces up the prices and revenue of the edge cloud.
+V. CONCLUSION
+In this work, we investigated the price-based computation
+ofﬂoading for a multiuser MEC system. The ﬁnite computation
+capacity of the edge cloud was considered to manage the of-
+ﬂoaded tasks from users. The Stackelberg game was applied to
+model the interaction between the edge cloud and users. Based
+on the edge cloud’s knowledge of the network information, we
+proposed uniform and differentiated pricing schemes, which
+can both be implemented with distributed manners.
+APPENDIX A
+THE PROOF OF PROPOSITION 1
+For given µ, the optimal solution for Problem P2 is
+ℓ∗
+k(µ)
+
+
+
+
+
+= mk,
+µ <
+1
+Fk ,
+∈[0, mk],
+µ =
+1
+Fk ,
+= 0,
+otherwise.
+(9)
+The case µ = 1/Fk for all k occurs with probability 0 and we
+let ℓk = mk in this case, which completes the proof.
+APPENDIX B
+THE PROOF OF PROPOSITION 2
+It can be proved by contradiction as follows. Suppose that
+the optimal price µ∗can exist in the interval (1/Fi, 1/Fi+1),
+∀i ∈{1, · · · , K −1}. Then, we consider the case eµ = 1/Fi+1.
+From (6), we can obtain that xk = 0 with k = 1, · · · , i and
+xk = 1 with k = i + 1, · · · , K for both eµ and µ∗. Therefore,
+the CPU cycles of the sum ofﬂoaded data PK
+k=1 mkxkCk
+for eµ are equivalent to that for µ∗. As the objective function
+UB(µ) given in (7) is an increasing linear function of the price
+µ, we can always have that the case eµ = 1/Fi+1 achieves
+a higher revenue than the case µ∗. Thus, this contradicts
+with the assumption that µ∗is optimal for Problem P3 with
+1/Fi < µ∗< 1/Fi+1. Therefore, the optimal price µ∗must
+exist in the set {1/F1, ..., 1/FK−1, 1/FK}.
+REFERENCES
+[1] A. u. R. Khan, M. Othman, S. A. Madani, and S. U. Khan, “A survey
+of mobile cloud computing application models,” IEEE Communications
+Surveys Tutorials, vol. 16, no. 1, pp. 393–413, February 2014.
+[2] K. Kumar and Y. H. Lu, “Cloud computing for mobile users: Can
+ofﬂoading computation save energy?” Computer, vol. 43, no. 4, pp. 51–
+56, April 2010.
+[3] Y. Mao, C. You, J. Zhang, K. Huang, and K. B. Letaief, “A survey on
+mobile edge computing: The communication perspective,” Available:
+https://arxiv.org/abs/1701.01090.
+[4] W. Shi, J. Cao, Q. Zhang, Y. Li, and L. Xu, “Edge computing: Vision
+and challenges,” IEEE Internet of Things Journal, vol. 3, no. 5, pp.
+637–646, October 2016.
+[5] S. Sardellitti, G. Scutari, and S. Barbarossa, “Joint optimization of radio
+and computational resources for multicell mobile-edge computing,”
+IEEE Transactions on Signal and Information Processing over Networks,
+vol. 1, no. 2, pp. 89–103, June 2015.
+[6] K. Zhang, Y. Mao, S. Leng, Q. Zhao, L. Li, X. Peng, L. Pan,
+S. Maharjan, and Y. Zhang, “Energy-efﬁcient ofﬂoading for mobile edge
+computing in 5G heterogeneous networks,” IEEE Access, vol. 4, pp.
+5896–5907, 2016.
+[7] Y. Mao, J. Zhang, and K. B. Letaief, “Dynamic computation ofﬂoading
+for mobile-edge computing with energy harvesting devices,” IEEE
+Journal on Selected Areas in Communications, vol. 34, no. 12, pp. 3590–
+3605, December 2016.
+[8] X. Chen, L. Jiao, W. Li, and X. Fu, “Efﬁcient multi-user computation
+ofﬂoading for mobile-edge cloud computing,” IEEE/ACM Transactions
+on Networking, vol. 24, no. 5, pp. 2795–2808, October 2016.
+[9] T. Zhao, S. Zhou, X. Guo, Y. Zhao, and Z. Niu, “Pricing policy
+and computational resource provisioning for delay-aware mobile edge
+computing,” in 2016 IEEE/CIC International Conference on Communi-
+cations in China (ICCC), July 2016, pp. 1–6.
+[10] Y. Mao, J. Zhang, S. H. Song, and K. B. Letaief, “Stochastic joint radio
+and computational resource management for multi-user mobile-edge
+computing systems,” IEEE Transactions on Wireless Communications,
+vol. 16, no. 9, pp. 5994–6009, September 2017.
+[11] C. You, K. Huang, H. Chae, and B. H. Kim, “Energy-efﬁcient resource
+allocation for mobile-edge computation ofﬂoading,” IEEE Transactions
+on Wireless Communications, vol. 16, no. 3, pp. 1397–1411, March
+2017.
+[12] J. Xu, L. Chen, and S. Ren, “Online learning for ofﬂoading and autoscal-
+ing in energy harvesting mobile edge computing,” IEEE Transactions on
+Cognitive Communications and Networking, vol. PP, no. 99, pp. 1–1,
+2017.
+[13] Y. Wang, M. Sheng, X. Wang, L. Wang, and J. Li, “Mobile-edge com-
+puting: Partial computation ofﬂoading using dynamic voltage scaling,”
+IEEE Transactions on Communications, vol. 64, no. 10, pp. 4268–4282,
+October 2016.
+[14] Y. Liu, R. Wang, and Z. Han, “Interference-constrained pricing for D2D
+networks,” IEEE Transactions on Wireless Communications, vol. 16,
+no. 1, pp. 475–486, January 2017.
+[15] S. Martello, D. Pisinger, and P. Toch, “Dynamic programming and strong
+bounds for the 0-1 knapsack problem,” Management Science, vol. 45,
+no. 3, pp. 414–424, 1999.
