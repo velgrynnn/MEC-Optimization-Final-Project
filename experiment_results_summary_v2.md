@@ -280,6 +280,20 @@ Hal yang paling menonjol dari eksperimen ini adalah **konsistensi absolut** anta
 - Untuk **setiap variasi K** (dari 10 hingga 50), keempat solver selalu menghasilkan **Objective Value** yang persis sama hingga 4 angka di belakang koma.
 - Keempat solver juga selalu memilih **kombinasi user (Selected Users) yang sama persis**. Contohnya pada K=50, semua solver sepakat hanya memilih user `[36, 38]`.
 
+**Tabel Perbandingan Objective Value:**
+
+| K | SCIP | Couenne | B&B+IPOPT | B&B+MINOS |
+|---|------|---------|-----------|-----------|
+| 10 | 23.4580 | 23.4580 | 23.4580 | 23.4580 |
+| 15 | 30.0549 | 30.0549 | 30.0549 | 30.0549 |
+| 20 | 36.3503 | 36.3503 | 36.3503 | 36.3503 |
+| 25 | 45.0418 | 45.0418 | 45.0418 | 45.0418 |
+| 30 | 42.1028 | 42.1028 | 42.1028 | 42.1028 |
+| 35 | 59.9519 | 59.9519 | 59.9519 | 59.9519 |
+| 40 | 59.4396 | 59.4396 | 59.4396 | 59.4396 |
+| 45 | 56.5662 | 56.5662 | 56.5662 | 56.5662 |
+| 50 | 59.4842 | 59.4842 | 59.4842 | 59.4842 |
+
 **Kesimpulan dari temuan ini:**
 Algoritma Branch and Bound manual yang kita bangun terbukti **matematis benar (rigorous)**. Algoritma kita tidak menggunakan estimasi kasar atau heuristik yang mengorbankan kualitas solusi; ia menjamin **global optimum** sama persis seperti halnya SCIP dan Couenne. Perbedaan utamanya hanyalah pada **biaya komputasi** (Waktu dan Nodes), di mana Global Solver jauh lebih efisien karena teknik *Branch-and-Cut* dan *Presolve* yang canggih, sementara B&B manual kita harus mencari secara "buta" (*brute-force* yang terarah) dengan hanya mengandalkan LP Relaxation biasa.
 
