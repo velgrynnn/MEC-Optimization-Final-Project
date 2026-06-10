@@ -6,6 +6,29 @@
 
 ---
 
+## Parameter Sistem (Berdasarkan Paper)
+
+Tabel berikut berisi penjelasan seluruh variabel dan parameter sistem yang digunakan untuk membangkitkan data eksperimen (sesuai *setup* simulasi pada paper referensi).
+
+| Simbol | Deskripsi | Nilai / Distribusi |
+|:---:|---|---|
+| $K$ | Jumlah pengguna (*users*) dalam jaringan | $10, 15, 20, \dots, 50$ |
+| $B$ | Total *bandwidth* komunikasi Edge Server | $1$ MHz ($10^6$ Hz) |
+| $N_0$ | *Noise power spectral density* | $-174$ dBm/Hz |
+| $h_k$ | *Channel gain* dari Base Station ke user $k$ | Seragam (Uniform) di $[-50, -30]$ dB |
+| $F_k$ | Kapasitas frekuensi CPU lokal milik user $k$ | Dipilih acak dari $\{0.1, 0.2, \dots, 1.0\}$ GHz |
+| $C_k$ | Siklus CPU yang dibutuhkan untuk memproses 1 bit data | Seragam (Uniform) di $[500, 1500]$ cycles/bit |
+| $R_k$ | Ukuran data tugas (*task size*) milik user $k$ | Seragam (Uniform) di $[100, 500]$ KB |
+| $p_k^t$ | Daya transmisi *uplink* dari perangkat user $k$ | $0.1$ W |
+| $P_{B,k}$ | Daya transmisi *downlink* dari Base Station ke user $k$ | $1.0$ W |
+| $\alpha_k$ | Koefisien bobot prioritas waktu pada utilitas user | $0.2$ |
+| $f_c$ | Kecepatan CPU Edge Server jika melayani 1 user (*baseline*) | $100$ GHz |
+| $F_{bar}$ | **Kapasitas maksimal total** CPU Edge Server (Constraint) | $6 \times 10^9$ cycles/s ($6$ GHz) |
+| $v_k$ | *Value* / Profit ekonomis BS jika menerima request user $k$ | *Dihitung matematis per user* |
+| $w_k$ | *Weight* / Beban komputasi yang diminta user $k$ | *Dihitung dari $C_k \times R_k$* |
+
+---
+
 ## Tabel Ringkasan Per Variasi K
 
 ### K = 10 users
